@@ -106,6 +106,14 @@
 5) Billing/Exports/Polish
    - Customer list, basic exports, CSV reports; perf gates; accessibility pass.
 
+## Reference docs from prior repo (read-only)
+- DB/docs/SCHEMA_DIFF_FROM_PREV.md
+- DB/docs/INDEX_PLAN.md
+- DB/docs/SCHEDULING_PRECOMPUTE_NOTES.md
+- IA/WIZARD_STEP_NOTES.md
+- API/ROUTES_NOTES_FROM_PREV.md
+- OPERATIONS/PERF_FINDINGS.md
+
 ## Page Map (Desktop)
 
 - /dashboard, /tasks, /properties, /properties/[id], /services, /services/new, /services/[id], /schedule, /customers, /reports, /settings
