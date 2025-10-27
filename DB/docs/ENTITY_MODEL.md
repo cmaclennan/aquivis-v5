@@ -1,0 +1,16 @@
+Core Entities
+- companies(id, name, ...)
+- profiles(id, email, first_name, last_name, role, company_id)
+- properties(id, company_id, name, address, has_individual_units)
+- units(id, property_id, name, unit_type, water_type, volume_litres)
+- services(id, unit_id, property_id, technician_id, service_date, status, notes)
+- water_tests(id, service_id, ph, chlorine, bromine, alkalinity, calcium, cyanuric, salt, turbidity, temperature, notes)
+- chemical_additions(id, service_id, chemical_type, quantity, unit_of_measure, cost)
+- maintenance_tasks(id, service_id, task_type, completed, notes)
+- plant_rooms(id, property_id, name, check_frequency, check_times, check_days)
+- bookings(id, unit_id, check_in_date, check_out_date)
+- equipment(id, property_id, unit_id, name, category, maintenance_frequency, maintenance_times, measurement_config, maintenance_scheduled)
+- schedule_templates(id, company_id, template_name, template_type, template_config, is_active)
+- property_rules(id, property_id, rule_type, rule_config, is_active)
+- scheduled_tasks(id, company_id, property_id, unit_id, date, time, task_type, priority, status)
+
