@@ -1,11 +1,12 @@
 'use client';
 import { useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [password, setPassword] = useState('');
 
   const onSend = async () => {
     setError(null);
@@ -19,15 +20,26 @@ export default function LoginPage() {
     else setSent(true);
   };
 
+  const onPasswordLogin = async () => {
+    setError(null);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) setError(error.message);
+    else window.location.href = '/tasks';
+  };
+
   return (
     <main style={{ padding: 24 }}>
       <h1>Sign in</h1>
       {sent ? (
         <p>Check your email for a magic link.</p>
       ) : (
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'grid', gap: 8, maxWidth: 360 }}>
           <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email" />
-          <button onClick={onSend}>Send link</button>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password" />
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button onClick={onPasswordLogin} disabled={!email || !password}>Sign in</button>
+            <button onClick={onSend} disabled={!email}>Send magic link</button>
+          </div>
         </div>
       )}
       {error && <p style={{ color: 'red' }}>{error}</p>}
