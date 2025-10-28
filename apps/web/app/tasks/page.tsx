@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import AuthGuard from '../../components/AuthGuard';
 
 async function fetchTasks() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -26,18 +27,20 @@ async function fetchTasks() {
 export default async function TasksPage() {
   const { data, timing } = await fetchTasks();
   return (
-    <main style={{ padding: 24 }}>
-      <h1>Task Inbox (mock)</h1>
-      <p>Server-Timing: {timing}</p>
-      <ul>
-        {data.items.map((t) => (
-          <li key={t.id}>{t.time} · {t.property} · {t.status}</li>
-        ))}
-      </ul>
-      <p style={{ marginTop: 16 }}>
-        Not seeing content? Ensure NEXT_PUBLIC_APP_URL is set (e.g., http://localhost:3000).
-      </p>
-    </main>
+    <AuthGuard>
+      <main style={{ padding: 24 }}>
+        <h1>Task Inbox</h1>
+        <p>Server-Timing: {timing}</p>
+        <ul>
+          {data.items.map((t) => (
+            <li key={t.id}>{t.time} · {t.property} · {t.status}</li>
+          ))}
+        </ul>
+        <p style={{ marginTop: 16 }}>
+          Not seeing content? Ensure NEXT_PUBLIC_APP_URL is set (e.g., http://localhost:3000).
+        </p>
+      </main>
+    </AuthGuard>
   );
 }
 
