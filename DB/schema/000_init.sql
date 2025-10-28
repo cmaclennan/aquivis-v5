@@ -248,7 +248,7 @@ returns uuid
 stable
 language sql
 as $$
-  select nullif(current_setting('request.jwt.claims', true), '')::json->>'company_id' :: uuid;
+  select (nullif(current_setting('request.jwt.claims', true), '')::json->>'company_id')::uuid;
 $$;
 
 create or replace function request_role()
@@ -281,7 +281,7 @@ create policy profiles_owner_write on profiles for update using (is_owner() or i
 do $$
 declare r record;
 begin
-  for r in select table_schema, table_name from information_schema.columns where column_name = 'company_id' and table_schema = 'public'
+  for r in select table_schema, table_name from information_schema.columns where column_name = 'company_id' and table_schema = 'public' and table_name not in ('profiles','companies')
   loop
     execute format('alter table %I.%I enable row level security;', r.table_schema, r.table_name);
     execute format('create policy %I on %I.%I for select using (company_id = request_company_id());', r.table_name||'_select', r.table_schema, r.table_name);
