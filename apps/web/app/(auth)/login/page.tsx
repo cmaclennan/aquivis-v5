@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '../../../lib/supabaseClient';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -28,21 +28,23 @@ export default function LoginPage() {
   };
 
   return (
-    <main style={{ padding: 24 }}>
-      <h1>Sign in</h1>
+    <main className="grid place-items-center">
+      <div className="card p-6 w-full max-w-md">
+        <h1 className="text-xl font-semibold mb-4">Sign in</h1>
       {sent ? (
         <p>Check your email for a magic link.</p>
       ) : (
-        <div style={{ display: 'grid', gap: 8, maxWidth: 360 }}>
-          <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email" />
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password" />
-          <div style={{ display: 'flex', gap: 8 }}>
-            <button onClick={onPasswordLogin} disabled={!email || !password}>Sign in</button>
-            <button onClick={onSend} disabled={!email}>Send magic link</button>
+        <div className="grid gap-2">
+          <input className="btn-ghost" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email" />
+          <input className="btn-ghost" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password" />
+          <div className="flex gap-2">
+            <button className="btn" onClick={onPasswordLogin} disabled={!email || !password}>Sign in</button>
+            <button className="btn-ghost" onClick={onSend} disabled={!email}>Magic link</button>
           </div>
         </div>
       )}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="text-danger mt-2">{error}</p>}
+      </div>
     </main>
   );
 }

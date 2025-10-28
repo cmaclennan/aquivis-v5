@@ -28,17 +28,25 @@ export default async function TasksPage() {
   const { data, timing } = await fetchTasks();
   return (
     <AuthGuard>
-      <main style={{ padding: 24 }}>
-        <h1>Task Inbox</h1>
-        <p>Server-Timing: {timing}</p>
-        <ul>
-          {data.items.map((t) => (
-            <li key={t.id}>{t.time} · {t.property} · {t.status}</li>
-          ))}
-        </ul>
-        <p style={{ marginTop: 16 }}>
-          Not seeing content? Ensure NEXT_PUBLIC_APP_URL is set (e.g., http://localhost:3000).
-        </p>
+      <main>
+        <h1 className="text-xl font-semibold mb-4">Task Inbox</h1>
+        <div className="text-sm text-neutral-700 mb-3">Server-Timing: {timing}</div>
+        {data.items.length === 0 ? (
+          <div className="card p-6">
+            <h2 className="font-medium mb-1">No tasks yet</h2>
+            <p className="text-neutral-700">Create properties and scheduling templates to see tasks here.</p>
+          </div>
+        ) : (
+          <ul className="grid gap-2">
+            {data.items.map((t) => (
+              <li key={t.id} className="card p-3 flex items-center gap-3">
+                <span className="pill pill-info">{t.time || '—'}</span>
+                <span className="font-medium">{t.property}</span>
+                <span className="ml-auto text-neutral-700">{t.status}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </main>
     </AuthGuard>
   );
