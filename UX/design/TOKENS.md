@@ -4,9 +4,9 @@ All tokens are authored clean-room. No code or assets copied.
 
 ## Color
 
-Two palette proposals; pick one to finalize.
+Two palette proposals; Palette A is selected. Palette B retained for future consideration.
 
-### Palette A – Aquivis Blue
+### Palette A – Aquivis Blue (Selected)
 - primary: #2090C3 (buttons, active accents)
 - primary-600: #1878A3
 - primary-50: #E6F4FA
@@ -18,7 +18,7 @@ Two palette proposals; pick one to finalize.
 - warning: #F59E0B
 - danger: #EF4444
 
-### Palette B – Slate & Teal
+### Palette B – Slate & Teal (Alternative; not active)
 - primary: #0EA5A6
 - primary-600: #0B8687
 - primary-50: #E5FAFA
