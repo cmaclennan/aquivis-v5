@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+  <defs>
+    <style>
+      .bg { fill: #F4F5F6; }
+      .panel { fill: #FFFFFF; stroke: #D2D4D7; stroke-width: 1; rx: 14; }
+      .text { fill: #0A0A0B; font-family: Inter, Arial, sans-serif; }
+      .muted { fill: #3A3B3D; font-family: Inter, Arial, sans-serif; opacity: 0.8; }
+      .pill { fill: #E6F4FA; }
+      .primary { fill: #2090C3; }
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1440" height="900"/>
+  <!-- Filters -->
+  <rect x="32" y="24" width="1376" height="64" fill="#FFFFFF" rx="12"/>
+  <text class="muted" x="56" y="64" font-size="14">Date</text>
+  <rect x="96" y="44" width="140" height="28" fill="#FFFFFF" stroke="#D2D4D7" rx="8"/>
+  <text class="muted" x="108" y="63" font-size="12">Today ▼</text>
+  <text class="muted" x="260" y="64" font-size="14">Status</text>
+  <rect x="312" y="44" width="140" height="28" fill="#FFFFFF" stroke="#D2D4D7" rx="8"/>
+  <text class="muted" x="324" y="63" font-size="12">All ▼</text>
+  
+  <!-- List -->
+  <rect class="panel" x="32" y="112" width="880" height="756"/>
+  <text class="text" x="56" y="150" font-size="18" font-weight="600">Tasks</text>
+  <rect x="56" y="170" width="832" height="56" fill="#FFFFFF" stroke="#D2D4D7" rx="10"/>
+  <circle cx="80" cy="198" r="6" class="primary"/>
+  <text class="text" x="100" y="202" font-size="14">08:00  Sea Temple – Main Pool</text>
+  <rect class="pill" x="700" y="184" width="120" height="28" rx="14"/>
+  <text class="primary" x="728" y="202" font-size="12" font-weight="600">Due</text>
+
+  <rect x="56" y="238" width="832" height="56" fill="#FFFFFF" stroke="#D2D4D7" rx="10"/>
+  <circle cx="80" cy="266" r="6" class="primary"/>
+  <text class="text" x="100" y="270" font-size="14">09:15  Sheraton – Villa 21</text>
+  <rect x="700" y="252" width="120" height="28" rx="14" fill="#FFF3CD"/>
+  <text fill="#F59E0B" x="720" y="270" font-size="12" font-weight="600">In Progress</text>
+
+  <!-- Side Panel -->
+  <rect class="panel" x="936" y="112" width="472" height="756"/>
+  <text class="text" x="960" y="150" font-size="18" font-weight="600">Task Details</text>
+  <text class="muted" x="960" y="180" font-size="14">Sea Temple – Main Pool</text>
+  <rect x="960" y="208" width="420" height="44" class="primary" rx="8"/>
+  <text x="980" y="236" font-size="14" font-weight="600" fill="#FFFFFF">Start Service</text>
+  <rect x="960" y="260" width="200" height="40" fill="#FFFFFF" stroke="#D2D4D7" rx="8"/>
+  <text class="muted" x="980" y="286" font-size="12">Add Photo</text>
+  <rect x="1180" y="260" width="200" height="40" fill="#FFFFFF" stroke="#D2D4D7" rx="8"/>
+  <text class="muted" x="1200" y="286" font-size="12">Mark Done</text>
+</svg>

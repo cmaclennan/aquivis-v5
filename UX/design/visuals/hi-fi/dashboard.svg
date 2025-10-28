@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+  <defs>
+    <style>
+      .bg { fill: #F4F5F6; }
+      .card { fill: #FFFFFF; stroke: #D2D4D7; stroke-width: 1; rx: 14; }
+      .text { fill: #0A0A0B; font-family: Inter, Arial, sans-serif; }
+      .muted { fill: #3A3B3D; font-family: Inter, Arial, sans-serif; opacity: 0.8; }
+      .primary { fill: #2090C3; }
+      .kpi { fill: #FFFFFF; stroke: #D2D4D7; stroke-width: 1; rx: 14; }
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1440" height="900"/>
+  <!-- Top Nav -->
+  <rect x="0" y="0" width="1440" height="72" fill="#FFFFFF"/>
+  <text class="text" x="32" y="44" font-size="20" font-weight="600">Aquivis</text>
+  <text class="muted" x="140" y="44" font-size="16">Dashboard</text>
+  <text class="muted" x="240" y="44" font-size="16">Tasks</text>
+  <text class="muted" x="320" y="44" font-size="16">Properties</text>
+  <text class="muted" x="430" y="44" font-size="16">Services</text>
+  <circle cx="1360" cy="36" r="6" class="primary"/>
+  <circle cx="1390" cy="36" r="6" fill="#3A3B3D"/>
+  <circle cx="1420" cy="36" r="6" fill="#3A3B3D"/>
+
+  <!-- KPI Row -->
+  <rect class="kpi" x="32" y="96" width="420" height="120"/>
+  <text class="muted" x="56" y="132" font-size="14">Total Tasks</text>
+  <text class="text" x="56" y="168" font-size="40" font-weight="700">128</text>
+  <rect x="320" y="140" width="110" height="28" fill="#E6F4FA" rx="14"/>
+  <text class="primary" x="336" y="160" font-size="14" font-weight="600">+12%</text>
+
+  <rect class="kpi" x="484" y="96" width="420" height="120"/>
+  <text class="muted" x="508" y="132" font-size="14">On-Time</text>
+  <text class="text" x="508" y="168" font-size="40" font-weight="700">92%</text>
+  <rect x="772" y="140" width="110" height="28" fill="#FFF3CD" rx="14"/>
+  <text fill="#F59E0B" x="788" y="160" font-size="14" font-weight="600">-3%</text>
+
+  <rect class="kpi" x="936" y="96" width="420" height="120"/>
+  <text class="muted" x="960" y="132" font-size="14">Open Issues</text>
+  <text class="text" x="960" y="168" font-size="40" font-weight="700">7</text>
+
+  <!-- Cards -->
+  <rect class="card" x="32" y="248" width="660" height="260"/>
+  <text class="text" x="56" y="288" font-size="18" font-weight="600">Attendance Report</text>
+  <rect x="56" y="308" width="600" height="160" fill="#0A0A0B" opacity="0.08" rx="10"/>
+
+  <rect class="card" x="724" y="248" width="632" height="260"/>
+  <text class="text" x="748" y="288" font-size="18" font-weight="600">Employee Composition</text>
+  <circle cx="820" cy="372" r="70" fill="#E6F4FA"/>
+  <path d="M820,372 L820,302 A70,70 0 0 1 888,372 Z" class="primary"/>
+
+  <rect class="card" x="32" y="532" width="1324" height="300"/>
+  <text class="text" x="56" y="572" font-size="18" font-weight="600">Schedule</text>
+  <rect x="56" y="592" width="1268" height="210" fill="#0A0A0B" opacity="0.06" rx="10"/>
+</svg>
