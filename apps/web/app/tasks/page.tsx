@@ -1,9 +1,26 @@
+import { createClient } from '@supabase/supabase-js';
+
 async function fetchTasks() {
-  const base = process.env.NEXT_PUBLIC_APP_URL || '';
-  const res = await fetch(`${base}/api/tasks`, { cache: 'no-store' });
-  const timing = res.headers.get('server-timing') || '';
-  const data = await res.json();
-  return { data, timing } as { data: { items: any[] }, timing: string };
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
+  const supabase = createClient(url, anon);
+  const start = Date.now();
+  const { data, error } = await supabase
+    .from('scheduled_tasks')
+    .select('id, date, time_slot, task_type, property_id, unit_id, status')
+    .order('date', { ascending: true })
+    .limit(20);
+  const ms = Date.now() - start;
+  if (error) {
+    return { data: { items: [] }, timing: `err;dur=${ms}` };
+  }
+  const items = (data ?? []).map((r: any) => ({
+    id: r.id,
+    time: r.time_slot ?? '',
+    property: String(r.property_id).slice(0, 8),
+    status: r.status,
+  }));
+  return { data: { items }, timing: `db;dur=${ms}` };
 }
 
 export default async function TasksPage() {
