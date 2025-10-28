@@ -1,5 +1,6 @@
 async function fetchTasks() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL ?? ''}/api/tasks`, { cache: 'no-store' });
+  const base = process.env.NEXT_PUBLIC_APP_URL || '';
+  const res = await fetch(`${base}/api/tasks`, { cache: 'no-store' });
   const timing = res.headers.get('server-timing') || '';
   const data = await res.json();
   return { data, timing } as { data: { items: any[] }, timing: string };
@@ -16,6 +17,9 @@ export default async function TasksPage() {
           <li key={t.id}>{t.time} · {t.property} · {t.status}</li>
         ))}
       </ul>
+      <p style={{ marginTop: 16 }}>
+        Not seeing content? Ensure NEXT_PUBLIC_APP_URL is set (e.g., http://localhost:3000).
+      </p>
     </main>
   );
 }
