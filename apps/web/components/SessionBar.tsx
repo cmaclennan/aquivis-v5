@@ -20,7 +20,7 @@ export default function SessionBar() {
     location.href = '/';
   };
 
-  if (!email) return <a href="/(auth)/login">Login</a>;
+  if (!email) return <a href="/login">Login</a>;
   return (
     <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
       <span>{email}</span>

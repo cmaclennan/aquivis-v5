@@ -12,6 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <header style={{ display: 'flex', gap: 12, padding: 12, borderBottom: '1px solid #eee' }}>
           <a href="/">Aquivis</a>
           <a href="/tasks">Tasks</a>
+          <a href="/properties">Properties</a>
           <div style={{ marginLeft: 'auto' }}>
             {/* @ts-expect-error Server does not know client state */}
             <SessionBar />
