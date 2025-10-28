@@ -9,12 +9,18 @@ export async function POST(req: NextRequest) {
   // Using service role for bootstrap (server-side)
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY as string;
+  if (!serviceKey) {
+    return NextResponse.json({ error: 'Server not configured: SUPABASE_SERVICE_ROLE_KEY missing' }, { status: 500 });
+  }
   const supabase = createClient(url, serviceKey, { auth: { persistSession: false } });
 
-  // Get current user via access token cookie (auth proxy)
-  const access = req.cookies.get('sb-access-token')?.value;
-  if (!access) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-  const { data: userInfo, error: userErr } = await supabase.auth.getUser(access);
+  // Get current user via Authorization: Bearer or cookie fallback
+  const authz = req.headers.get('authorization');
+  const bearer = authz?.toLowerCase().startsWith('bearer ')
+    ? authz.split(' ')[1]
+    : req.cookies.get('sb-access-token')?.value;
+  if (!bearer) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const { data: userInfo, error: userErr } = await supabase.auth.getUser(bearer);
   if (userErr || !userInfo.user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
 
   // Create company and link profile
