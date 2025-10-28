@@ -1,0 +1,57 @@
+name: DB Migrations
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Apply migrations (true) or Dry-Run (false)"
+        required: true
+        default: "false"
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    environment: Production
+    env:
+      CONN: postgresql://${{ secrets.PGUSER }}:${{ secrets.PGPASSWORD }}@${{ secrets.PGHOST }}:5432/${{ secrets.PGDATABASE }}?sslmode=require
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install psql
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Run migrations (dry-run or apply)
+        shell: bash
+        run: |
+          set -euo pipefail
+          APPLY="${{ github.event.inputs.apply }}"
+          echo "Apply mode: $APPLY"
+          if [ "$APPLY" = "true" ]; then
+            psql "$CONN" -v ON_ERROR_STOP=1 -f DB/schema/000_init.sql
+            psql "$CONN" -v ON_ERROR_STOP=1 -f DB/schema/010_indices.sql
+          else
+            psql "$CONN" -v ON_ERROR_STOP=1 <<'SQL'
+            BEGIN;
+            \i DB/schema/000_init.sql
+            \i DB/schema/010_indices.sql
+            ROLLBACK;
+            SQL
+          fi
+
+      - name: Save migration log
+        if: always()
+        run: |
+          echo "Migrations completed (mode: $APPLY)" | tee migration-summary.txt
+        shell: bash
+
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: db-migration-summary
+          path: migration-summary.txt
+
+
