@@ -1,0 +1,15 @@
+{
+  "name": "aquivis-v5",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "migrate:dry": "node scripts/migrate.js --dry-run",
+    "migrate:apply": "node scripts/migrate.js"
+  },
+  "dependencies": {
+    "pg": "^8.11.3"
+  }
+}
+
+
