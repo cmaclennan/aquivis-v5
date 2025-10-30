@@ -163,6 +163,25 @@ export default function TeamPage() {
     }
   }
 
+  async function handleDeleteInvitation(invitationId: string) {
+    if (!confirm('Delete this pending invitation?')) return;
+    try {
+      const res = await fetch(`/api/team/invitations?id=${encodeURIComponent(invitationId)}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        showError(data.error || 'Failed to delete invitation');
+        return;
+      }
+      setPendingInvitations(prev => prev.filter(inv => inv.id !== invitationId));
+      showSuccess('Invitation deleted');
+    } catch (err) {
+      console.error('Error deleting invitation:', err);
+      showError('Failed to delete invitation');
+    }
+  }
+
   async function handleRoleUpdate(memberId: string, newRole: string) {
     try {
       const res = await fetch(`/api/team/${memberId}`, {
@@ -291,9 +310,17 @@ export default function TeamPage() {
                         </p>
                       </div>
                     </div>
-                    <span className="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
-                      Pending
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">Pending</span>
+                      {canManageTeam && (
+                        <button
+                          onClick={() => handleDeleteInvitation(invitation.id)}
+                          className="text-sm text-danger hover:text-danger/80 font-medium"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
                   </div>
                 );
               })}

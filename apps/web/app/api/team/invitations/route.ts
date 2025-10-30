@@ -73,3 +73,65 @@ export async function GET(req: NextRequest) {
   }
 }
 
+// DELETE /api/team/invitations?id=INVITATION_ID - Delete a pending invitation
+export async function DELETE(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+    if (!id) {
+      return NextResponse.json({ error: 'Invitation id is required' }, { status: 400 });
+    }
+
+    const user = await getServerUser(req);
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createServerClient(false, req);
+
+    // Verify the invitation belongs to the user's company and is pending
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('company_id, role')
+      .eq('id', user.id)
+      .single();
+
+    if (!profile?.company_id) {
+      return NextResponse.json({ error: 'Company not found' }, { status: 404 });
+    }
+
+    if (profile.role !== 'owner' && profile.role !== 'manager') {
+      return NextResponse.json({ error: 'Only owners and managers can delete invitations' }, { status: 403 });
+    }
+
+    const { data: invitation } = await supabase
+      .from('invitations')
+      .select('id, company_id, accepted_at')
+      .eq('id', id)
+      .single();
+
+    if (!invitation || invitation.company_id !== profile.company_id) {
+      return NextResponse.json({ error: 'Invitation not found' }, { status: 404 });
+    }
+
+    if (invitation.accepted_at) {
+      return NextResponse.json({ error: 'Cannot delete accepted invitation' }, { status: 400 });
+    }
+
+    const { error: delError } = await supabase
+      .from('invitations')
+      .delete()
+      .eq('id', id);
+
+    if (delError) {
+      console.error('Error deleting invitation:', delError);
+      return NextResponse.json({ error: 'Failed to delete invitation' }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error('Error in DELETE /api/team/invitations:', err);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+

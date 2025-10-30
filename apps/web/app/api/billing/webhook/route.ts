@@ -14,16 +14,15 @@ export async function POST(req: NextRequest) {
     console.warn('STRIPE_WEBHOOK_SECRET not set');
   }
 
+  if (!webhookSecret || !sig) {
+    return new NextResponse('Missing webhook signature/secret', { status: 400 });
+  }
+
   let event: any;
 
   try {
     const body = await req.text();
-    if (webhookSecret && sig) {
-      event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
-    } else {
-      // Unsafe fallback for local dev without signature
-      event = JSON.parse(body);
-    }
+    event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err) {
     console.error('Webhook signature verification failed.', err);
     return new NextResponse('Bad signature', { status: 400 });

@@ -1,8 +1,53 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const sentryIngest = 'https://o'.concat(String(process.env.SENTRY_ORG || ''), '.ingest.sentry.io');
+const stripeJs = 'https://js.stripe.com';
+const stripeApi = 'https://api.stripe.com';
+
+const cspDirectives = [
+  "default-src 'self'",
+  // Scripts: self + Stripe + Sentry tunnel + allow inline via nonce/hash only in future enforcement
+  `script-src 'self' ${stripeJs}`,
+  // Styles: self and unsafe-inline only if needed; aim to remove once all styles are hashed
+  "style-src 'self' 'unsafe-inline'",
+  // Images: self, data URIs, and remote assets (Supabase storage/public if used)
+  `img-src 'self' data: blob: ${supabaseUrl}`,
+  // Fonts
+  "font-src 'self' data:",
+  // Connections: API, Supabase, Sentry tunnel route, Stripe
+  `connect-src 'self' ${appUrl} ${supabaseUrl} ${stripeApi}`,
+  // Frames: restrict to Stripe Checkout/Portal
+  `frame-src 'self' ${stripeJs} ${stripeApi}`,
+  // Disallow all other embedding
+  "frame-ancestors 'none'",
+  // Workers and media if needed
+  "media-src 'self'",
+  "object-src 'none'",
+  // Upgrade to HTTPS
+  'upgrade-insecure-requests',
+].join('; ');
+
 const nextConfig: NextConfig = {
-  /* config options here */
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          // Report-Only first; switch to enforcing `Content-Security-Policy` after validation
+          { key: 'Content-Security-Policy-Report-Only', value: cspDirectives },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'Permissions-Policy', value: 'geolocation=(), camera=(), microphone=()' },
+          // HSTS should be enabled at the edge/proxy; setting here for completeness
+          { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
+        ],
+      },
+    ];
+  },
 };
 
 // Make sure adding Sentry options is the last code to run before exporting
