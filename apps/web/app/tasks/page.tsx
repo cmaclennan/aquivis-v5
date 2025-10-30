@@ -1,54 +1,115 @@
-import { createClient } from '@supabase/supabase-js';
-import AuthGuard from '../../components/AuthGuard';
+'use client';
 
-async function fetchTasks() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
-  const supabase = createClient(url, anon);
-  const start = Date.now();
-  const { data, error } = await supabase
-    .from('scheduled_tasks')
-    .select('id, date, time_slot, task_type, property_id, unit_id, status')
-    .order('date', { ascending: true })
-    .limit(20);
-  const ms = Date.now() - start;
-  if (error) {
-    return { data: { items: [] }, timing: `err;dur=${ms}` };
-  }
-  const items = (data ?? []).map((r: any) => ({
-    id: r.id,
-    time: r.time_slot ?? '',
-    property: String(r.property_id).slice(0, 8),
-    status: r.status,
-  }));
-  return { data: { items }, timing: `db;dur=${ms}` };
+import { useEffect, useState } from 'react';
+import AuthGuard from '@/components/AuthGuard';
+import PageHeader from '@/components/ui/PageHeader';
+import { Card, CardBody } from '@/components/ui/Card';
+import EmptyState from '@/components/ui/EmptyState';
+import { supabase } from '@/lib/supabaseClient';
+
+interface Task {
+  id: string;
+  task_type: string;
+  date: string;
+  time_slot: string | null;
+  priority: string;
+  status: string;
+  properties: { name: string } | null;
+  units: { name: string } | null;
 }
 
-export default async function TasksPage() {
-  const { data, timing } = await fetchTasks();
+export default function TasksPage() {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchTasks() {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('scheduled_tasks')
+          .select('*, properties(name), units(name)')
+          .order('date', { ascending: true })
+          .order('time_slot', { ascending: true })
+          .limit(50);
+
+        if (error) throw error;
+        setTasks(data || []);
+      } catch (err) {
+        console.error('Error fetching tasks:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchTasks();
+  }, []);
+
   return (
     <AuthGuard>
-      <main>
-        <h1 className="text-xl font-semibold mb-4">Task Inbox</h1>
-        <div className="text-sm text-neutral-700 mb-3">Server-Timing: {timing}</div>
-        {data.items.length === 0 ? (
-          <div className="card p-6">
-            <h2 className="font-medium mb-1">No tasks yet</h2>
-            <p className="text-neutral-700">Create properties and scheduling templates to see tasks here.</p>
-          </div>
-        ) : (
-          <ul className="grid gap-2">
-            {data.items.map((t) => (
-              <li key={t.id} className="card p-3 flex items-center gap-3">
-                <span className="pill pill-info">{t.time || '—'}</span>
-                <span className="font-medium">{t.property}</span>
-                <span className="ml-auto text-neutral-700">{t.status}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+      <main className="bg-gray-50 min-h-screen">
+        <div className="mx-auto max-w-6xl px-4 py-8 grid gap-6">
+          <PageHeader title="Tasks" subtitle="View scheduled tasks" />
+          <Card>
+            <CardBody>
+              <div className="overflow-auto">
+                {loading ? (
+                  <div className="py-12">
+                    <div className="space-y-3">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="h-16 bg-gray-100 rounded animate-pulse" />
+                      ))}
+                    </div>
+                  </div>
+                ) : tasks.length === 0 ? (
+                  <EmptyState title="No tasks yet" description="Once you generate or schedule tasks, they'll appear here." />
+                ) : (
+                  <table className="w-full text-left">
+                    <thead>
+                      <tr className="text-sm text-gray-700 border-b border-gray-200">
+                        <th className="py-3 pr-4 font-semibold">Task</th>
+                        <th className="py-3 pr-4 font-semibold">Property</th>
+                        <th className="py-3 pr-4 font-semibold">Date</th>
+                        <th className="py-3 font-semibold">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {tasks.map((task) => (
+                        <tr key={task.id} className="border-t border-gray-200 hover:bg-gray-50 transition-colors">
+                          <td className="py-3 pr-4">
+                            <p className="font-semibold text-gray-900">{task.task_type}</p>
+                            {task.units && <p className="text-sm text-gray-600">{task.units.name}</p>}
+                          </td>
+                          <td className="py-3 pr-4">
+                            <p className="text-sm text-gray-600">{task.properties?.name || '—'}</p>
+                          </td>
+                          <td className="py-3 pr-4">
+                            <p className="text-sm text-gray-600">
+                              {new Date(task.date).toLocaleDateString()}
+                              {task.time_slot && ` • ${task.time_slot}`}
+                            </p>
+                          </td>
+                          <td className="py-3">
+                            <span className={`px-2 py-1 rounded-md text-xs font-medium ${
+                              task.status === 'completed' ? 'bg-success/10 text-success' :
+                              task.status === 'in_progress' ? 'bg-primary/10 text-primary' :
+                              'bg-gray-100 text-gray-700'
+                            }`}>
+                              {task.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </CardBody>
+          </Card>
+        </div>
       </main>
     </AuthGuard>
   );
 }
+
 

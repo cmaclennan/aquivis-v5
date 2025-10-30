@@ -1,43 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createServerClient } from '@/lib/supabaseServer';
+import { sendWelcomeEmail } from '@/lib/email';
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { companyName, timezone } = body as { companyName: string; timezone: string };
-  if (!companyName) return NextResponse.json({ error: 'companyName required' }, { status: 400 });
+    const { company_name, timezone } = await req.json();
+    const token = req.headers.get('authorization')?.replace('Bearer ', '');
+    if (!token) return new NextResponse('Unauthorized', { status: 401 });
 
-  // Using service role for bootstrap (server-side)
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY as string;
-  if (!serviceKey) {
-    return NextResponse.json({ error: 'Server not configured: SUPABASE_SERVICE_ROLE_KEY missing' }, { status: 500 });
-  }
-  const supabase = createClient(url, serviceKey, { auth: { persistSession: false } });
+    const supabaseSr = await createServerClient(true);
 
-  // Get current user via Authorization: Bearer or cookie fallback
-  const authz = req.headers.get('authorization');
-  const bearer = authz?.toLowerCase().startsWith('bearer ')
-    ? authz.split(' ')[1]
-    : req.cookies.get('sb-access-token')?.value;
-  if (!bearer) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-  const { data: userInfo, error: userErr } = await supabase.auth.getUser(bearer);
-  if (userErr || !userInfo.user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+    // get user to attach profile/company
+    const { data: jwt } = await supabaseSr.auth.getUser(token);
+    const userId = jwt.user?.id;
+    const userEmail = (jwt.user as any)?.email as string | undefined;
+    if (!userId) return new NextResponse('Unauthorized', { status: 401 });
 
-  // Create company and link profile
-  const { data: company, error: cErr } = await supabase
-    .from('companies')
-    .insert({ name: companyName, timezone: timezone || 'UTC' })
-    .select('id')
-    .single();
-  if (cErr) return NextResponse.json({ error: cErr.message }, { status: 500 });
+    // create company with audit trail
+    const { data: company, error: cErr } = await supabaseSr.from('companies')
+        .insert({ name: company_name, timezone, created_by: userId })
+        .select('*').single();
+    if (cErr) return new NextResponse(cErr.message, { status: 400 });
 
-  // Upsert profile with company and default role owner
-  const { error: pErr } = await supabase
-    .from('profiles')
-    .upsert({ id: userInfo.user.id, email: userInfo.user.email, role: 'owner', company_id: company.id });
-  if (pErr) return NextResponse.json({ error: pErr.message }, { status: 500 });
+    // upsert profile with audit trail (trigger will automatically update JWT claims)
+    const { data: profile, error: pErr } = await supabaseSr.from('profiles')
+        .upsert({ id: userId, company_id: company.id, role: 'owner', email: userEmail, created_by: userId })
+        .select('first_name, last_name')
+        .single();
+    if (pErr) return new NextResponse(pErr.message, { status: 400 });
 
-  return NextResponse.json({ ok: true });
+    // Send welcome email (don't block on failure)
+    if (userEmail) {
+        const userName = profile?.first_name || userEmail.split('@')[0];
+        sendWelcomeEmail(userEmail, userName).catch(err => {
+            console.error('Failed to send welcome email:', err);
+        });
+    }
+
+    return NextResponse.json({ ok: true });
 }
 
 

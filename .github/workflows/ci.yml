@@ -1,10 +1,11 @@
 name: CI
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
+    paths:
+      - 'apps/web/**'
+      - '.github/workflows/ci.yml'
 
 jobs:
   build:
@@ -24,5 +25,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: echo "axe and Lighthouse placeholders — to be enabled when app shell stabilizes"
+      - run: echo "axe and Lighthouse will be enabled post-shell. This CI runs only on PRs."
 

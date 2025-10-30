@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aquivis - Task Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13b6ec",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-700 px-6 md:px-10 py-3 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-gray-900 dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_319)">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"></path>
+</g>
+<defs>
+<clippath id="clip0_6_319"><rect fill="white" height="48" width="48"></rect></clippath>
+</defs>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">Aquivis</h2>
+</div>
+</div>
+<div class="hidden md:flex flex-1 justify-center items-center gap-8">
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
+<a class="text-primary dark:text-primary text-sm font-bold leading-normal" href="#">Tasks</a>
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Customers</a>
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Technicians</a>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ml-2" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVVcFeK6PzZywMxDAofzKUXptFaTpvH2vjOSAz7T_CeveQmhcAM7Z_eIImCqYmZ6Z7woPgpjpIp4msFdLJ1nWf2nRqpMjMYL64CdE-BrwPH1Hp90BWAqa6CXt_SzXrJ6AWOPt7SUd3gktyTRWrIRSWXqZltFdmYYiOVCv1b0ZbxVNx-ZK2WE6y_R41acsTjY7OMRuCKqB8mIDJMSnut-6x9xxf0N7lFCAVbLAshw0x0Q-x0UOfnX9avBHka7go8H1M3gBL49xNNFg");'></div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="layout-container flex h-full grow flex-col">
+<div class="px-4 sm:px-6 md:px-10 lg:px-20 xl:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col w-full max-w-7xl flex-1">
+<!-- PageHeading -->
+<div class="flex flex-wrap justify-between items-center gap-4 py-6">
+<div class="flex flex-col gap-1">
+<p class="text-gray-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Task Management</p>
+<p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">Schedule, assign, and track all your pool service jobs.</p>
+</div>
+<button class="flex min-w-[84px] items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg mr-2">add</span>
+<span class="truncate">Add New Task</span>
+</button>
+</div>
+<!-- Filters and View Toggle -->
+<div class="flex flex-col md:flex-row items-center gap-4 py-4 border-y border-gray-200 dark:border-gray-700">
+<!-- SearchBar -->
+<div class="w-full md:w-auto md:flex-1">
+<label class="flex flex-col min-w-40 h-12 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-gray-500 dark:text-gray-400 flex border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search by property or customer name..." value=""/>
+</div>
+</label>
+</div>
+<!-- Chips -->
+<div class="flex gap-3 overflow-x-auto w-full md:w-auto">
+<button class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-100 dark:bg-gray-800 px-4 border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">Status: All</p>
+<span class="material-symbols-outlined text-lg text-gray-500 dark:text-gray-400">expand_more</span>
+</button>
+<button class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-100 dark:bg-gray-800 px-4 border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">Technician: All</p>
+<span class="material-symbols-outlined text-lg text-gray-500 dark:text-gray-400">expand_more</span>
+</button>
+<button class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-100 dark:bg-gray-800 px-4 border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-lg text-gray-500 dark:text-gray-400 mr-1">calendar_month</span>
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">Date Range</p>
+</button>
+</div>
+<!-- SegmentedButtons -->
+<div class="flex h-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 p-1 border border-gray-200 dark:border-gray-700">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-3 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-900 has-[:checked]:shadow-sm has-[:checked]:text-primary text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-xl">list</span>
+<input checked="" class="invisible w-0" name="view-toggle" type="radio" value="List View"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-3 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-900 has-[:checked]:shadow-sm has-[:checked]:text-primary text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-xl">calendar_view_month</span>
+<input class="invisible w-0" name="view-toggle" type="radio" value="Calendar View"/>
+</label>
+</div>
+</div>
+<!-- Task List -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
+<!-- Task Card 1: Completed -->
+<div class="flex flex-col gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-lg font-bold text-gray-900 dark:text-white">Weekly Cleaning</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Jane Doe, 123 Aqua Vista Ln.</p>
+</div>
+<div class="flex items-center gap-1 rounded-full bg-green-100 dark:bg-green-900/50 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-300">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                    Completed
+                                </div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-700 pt-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<img class="size-8 rounded-full object-cover" data-alt="Technician Sarah's avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm0YwpmaWrCoxQXY5reJH2QOn6wqzTFkjulQRubOmYuyQAwZ5-lD9xY4i_fjh9rPbxTJJDr1vZe11MHvJ62x8R_LYjA_2YGWhGPRodgIP6kBNVX-ZVTP382xOLGTkmuG7TzxlJHNld0MwjmnOkpQ_sIQh5eFYCWG5ekiV1WcvJwyFyvVMo3q4-klQFj_uri4tGY5TpZ8AiP8daBZ6fXqoJCN01HIPPw8LTJ8RBOBbRs0Fx7Mhe7PgNhmvDcJTsiWfrnBNJ6Jg-rBc"/>
+<div>
+<p class="text-sm font-medium text-gray-800 dark:text-gray-200">Sarah K.</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">June 10, 2024 @ 10:00 AM</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
+<button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Task Card 2: In Progress -->
+<div class="flex flex-col gap-4 rounded-xl border-2 border-primary bg-primary/5 dark:bg-primary/10 p-5 shadow-lg -translate-y-1">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-lg font-bold text-gray-900 dark:text-white">Filter Repair</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">John Smith, 456 Ocean Dr.</p>
+</div>
+<div class="flex items-center gap-1 rounded-full bg-orange-100 dark:bg-orange-900/50 px-3 py-1 text-xs font-medium text-orange-700 dark:text-orange-300">
+<span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                                    In Progress
+                                </div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-700 pt-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<img class="size-8 rounded-full object-cover" data-alt="Technician Mike's avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM58p1pzyUm6MPjzxhHP6CWpJxREsPDJWuFaO7PoFEsdXYl82ISSMiqzWXso6r-rwETNaSWrr5mrcyzikaIVI_WbjDnkQSUTaiBGITE6FTxLhe7Q4h0vRR5lW2Bjcd1DbGnfi4aZm3LVSmCAudibkjKMpCqO3iQjKS5UoYKR9m56mmVA6J_t2s0zSHHsmZ5nQ5jyuHh_f_yioMmvTKf_No_p_LI0Ugjr47DBLIZo5G5XKrsynWPNEpgO4eoP7X1yzy3TTgyaCU_TE"/>
+<div>
+<p class="text-sm font-medium text-gray-800 dark:text-gray-200">Mike R.</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">June 12, 2024 @ 1:30 PM</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
+<button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Task Card 3: Scheduled -->
+<div class="flex flex-col gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-lg font-bold text-gray-900 dark:text-white">Chemical Balance Check</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Emily White, 789 Coral Way</p>
+</div>
+<div class="flex items-center gap-1 rounded-full bg-blue-100 dark:bg-blue-900/50 px-3 py-1 text-xs font-medium text-blue-700 dark:text-blue-300">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                                    Scheduled
+                                </div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-700 pt-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<img class="size-8 rounded-full object-cover" data-alt="Technician David's avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAK39l7Cxh6j89jkBCdir552mz9n9bBOPtNJDEc0U5NmwYdu4QAjoqDpirpUvdE9G8CDderxQjJZ5qkU80NYAztWELLSWdI_RtXr0tZVevD3BUFMRaOj3WRHEsiQ50x3Eq-5ucuObQ4KlsrHzcOHgVhDSd6vETMrkZnAw2Vnm0YtSMQ9KB9xgvJ_xwcGz6ov3GcX-d1NreufU0ugKb17oM2UTxAhxJqemmE6FbSWQ0CVUhWYbhDzm0cLswF5DfYz3K7cRZUnVS5_HY"/>
+<div>
+<p class="text-sm font-medium text-gray-800 dark:text-gray-200">David L.</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">June 14, 2024 @ 9:00 AM</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
+<button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Task Card 4: Cancelled -->
+<div class="flex flex-col gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all opacity-70">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-lg font-bold text-gray-900 dark:text-white">Pool Opening</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Michael Brown, 321 Palm Ct.</p>
+</div>
+<div class="flex items-center gap-1 rounded-full bg-red-100 dark:bg-red-900/50 px-3 py-1 text-xs font-medium text-red-700 dark:text-red-300">
+<span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                    Cancelled
+                                </div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-700 pt-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<img class="size-8 rounded-full object-cover" data-alt="Technician Sarah's avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtM7MEpeNddSpuS80Z_uCM81SXjhSoV8g0FCoFGp2rLrb7DyAtfZuTSJWkABfsyLpGORFLF6OMqpA-xUGDPXLkVDCBmMEwoHNKLUJnhmJX61V22gPW-M_Fks6mliWov-A9HfKHhsuZ5pTyX9KpF8bFQ7sFemRB_XvactbnJ_6esLzfRB-PiZqdsRd-FAjX41JDclrmpHUh1HnwvrDuP8iuxMI7csILbV4ofNdWe6JpNte_j90YzaoRbAe3kAuoHlAprI4G5nu2Cig"/>
+<div>
+<p class="text-sm font-medium text-gray-800 dark:text-gray-200">Sarah K.</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">June 15, 2024 @ 2:00 PM</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
+<button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State (Example) -->
+<div class="hidden flex-col items-center justify-center gap-6 text-center py-20 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl mt-8">
+<div class="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-5xl">task_alt</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-xl font-bold text-gray-900 dark:text-white">No Tasks Found</h3>
+<p class="text-gray-500 dark:text-gray-400 max-w-sm">It looks like there are no tasks matching your filters. Try adjusting your search or create a new task to get started.</p>
+</div>
+<button class="flex min-w-[84px] items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg mr-2">add</span>
+<span class="truncate">Create Your First Task</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

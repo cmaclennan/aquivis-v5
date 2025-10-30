@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aquivis Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13b6ec",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a2c34",
+                        "text-light": "#0d181b",
+                        "text-dark": "#e0f7fa",
+                        "text-muted-light": "#4c869a",
+                        "text-muted-dark": "#94a3b8",
+                        "border-light": "#e7f0f3",
+                        "border-dark": "#334155",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark bg-background-light/80 dark:bg-background-dark/80 px-4 sm:px-8 lg:px-10 py-3 backdrop-blur-sm">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-text-light dark:text-text-dark">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"></path>
+</svg>
+</div>
+<h2 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em]">Aquivis</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-primary text-sm font-bold leading-normal" href="#">Dashboard</a>
+<a class="text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark text-sm font-medium leading-normal transition-colors" href="#">Schedule</a>
+<a class="text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark text-sm font-medium leading-normal transition-colors" href="#">Clients</a>
+<a class="text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark text-sm font-medium leading-normal transition-colors" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4">
+<label class="hidden sm:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-text-muted-light dark:text-text-muted-dark flex border-none bg-border-light dark:bg-border-dark/50 items-center justify-center pl-3 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-border-light dark:bg-border-dark/50 h-full placeholder:text-text-muted-light dark:placeholder:text-text-muted-dark px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search" value=""/>
+</div>
+</label>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-border-light dark:bg-border-dark/50 text-text-muted-light dark:text-text-muted-dark hover:bg-primary/20 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCByMgMCelkZTgWgT6zUBlNqoJJBTa_JtKe4jyB0qtfeg8J_Qp8tvSXD59Q3w9vvYXFIKI_voAXZY0JSFEIv9mtpYuJdvzpTAXq0zgk5pNdQFbm6GFBoI17rBvVaWwjMRALK1YnH_oei-wD01lVMGj8lexCWgwjjNacNU5B_aELNXC-GMME16-lXNL10UL4NgrSfI1m14CRSBGPhoL0NJkB5eB6yzecZVBu5xVVVPkftNGNs_0ByhofGt6YKxPijYOPlN7MgIvsQ7Y');"></div>
+</div>
+</header>
+<main class="px-4 sm:px-8 lg:px-10 flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col w-full max-w-7xl flex-1">
+<div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+<div class="flex min-w-72 flex-col gap-1">
+<p class="text-text-light dark:text-text-dark text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Good Morning, Alex!</p>
+<p class="text-text-muted-light dark:text-text-muted-dark text-base font-normal leading-normal">Here is an overview of your daily operations.</p>
+</div>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary h-12 px-6 text-white text-sm font-bold leading-normal tracking-wide shadow-lg shadow-primary/30 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+<span>Add New Task</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Tasks Completed</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-4xl font-bold leading-tight">12</p>
+<p class="text-green-500 text-sm font-medium leading-normal flex items-center gap-1"><span class="material-symbols-outlined text-base">arrow_upward</span>5% vs yesterday</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Revenue Today</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-4xl font-bold leading-tight">$1,850</p>
+<p class="text-green-500 text-sm font-medium leading-normal flex items-center gap-1"><span class="material-symbols-outlined text-base">arrow_upward</span>12% vs yesterday</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Pending Invoices</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-4xl font-bold leading-tight">4</p>
+<p class="text-red-500 text-sm font-medium leading-normal flex items-center gap-1"><span class="material-symbols-outlined text-base">arrow_downward</span>2% vs yesterday</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">New Leads</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-4xl font-bold leading-tight">3</p>
+<p class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal">Awaiting contact</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 flex flex-col gap-4">
+<!-- Upcoming Tasks Card -->
+<div class="flex flex-col rounded-xl bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm overflow-hidden">
+<div class="p-6">
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em]">Upcoming Tasks</h3>
+<p class="text-text-muted-light dark:text-text-muted-dark text-sm font-normal leading-normal">A list of the next scheduled jobs for today.</p>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-4 px-6 py-4 hover:bg-background-light dark:hover:bg-background-dark border-t border-border-light dark:border-border-dark">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined">pool</span></div>
+<div class="flex-1">
+<p class="font-semibold text-text-light dark:text-text-dark">Full Service - Johnson Residence</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">123 Aqua Lane, Miami, FL</p>
+</div>
+<div class="text-right">
+<p class="font-medium text-text-light dark:text-text-dark">9:00 AM</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">In 30 mins</p>
+</div>
+</div>
+<div class="flex items-center gap-4 px-6 py-4 hover:bg-background-light dark:hover:bg-background-dark border-t border-border-light dark:border-border-dark">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined">water_drop</span></div>
+<div class="flex-1">
+<p class="font-semibold text-text-light dark:text-text-dark">Chemical Check - Smith Property</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">456 Oasis Drive, Miami, FL</p>
+</div>
+<div class="text-right">
+<p class="font-medium text-text-light dark:text-text-dark">10:30 AM</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">In 2 hours</p>
+</div>
+</div>
+<div class="flex items-center gap-4 px-6 py-4 hover:bg-background-light dark:hover:bg-background-dark border-t border-border-light dark:border-border-dark">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined">filter_alt</span></div>
+<div class="flex-1">
+<p class="font-semibold text-text-light dark:text-text-dark">Filter Cleaning - Davis Estate</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">789 Palm Court, Miami, FL</p>
+</div>
+<div class="text-right">
+<p class="font-medium text-text-light dark:text-text-dark">1:00 PM</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">In 4 hours</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-border-light dark:border-border-dark">
+<a class="w-full text-center text-primary font-semibold text-sm hover:underline" href="#">View Full Schedule</a>
+</div>
+</div>
+<!-- Task Completion Rate -->
+<div class="flex flex-col rounded-xl bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
+<div class="p-6">
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em]">Task Completion Rate</h3>
+<p class="text-text-muted-light dark:text-text-muted-dark text-sm font-normal leading-normal">Today's completed vs. pending tasks.</p>
+</div>
+<div class="px-6 pb-6 flex items-center gap-8">
+<div class="relative size-32">
+<svg class="size-full" height="36" viewbox="0 0 36 36" width="36" xmlns="http://www.w3.org/2000/svg">
+<circle class="stroke-current text-primary/20" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle class="stroke-current text-primary" cx="18" cy="18" fill="none" r="16" stroke-dasharray="80 100" stroke-dashoffset="0" stroke-width="3" transform="rotate(-90 18 18)"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-2xl font-bold text-text-light dark:text-text-dark">80%</span>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<div>
+<p class="font-semibold text-text-light dark:text-text-dark">Completed</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">12 Tasks</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary/20"></div>
+<div>
+<p class="font-semibold text-text-light dark:text-text-dark">Pending</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">3 Tasks</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-1">
+<!-- Pending Properties Card -->
+<div class="flex flex-col rounded-xl bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
+<div class="p-6">
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em]">Pending Properties</h3>
+<p class="text-text-muted-light dark:text-text-muted-dark text-sm font-normal leading-normal">New properties awaiting service confirmation.</p>
+</div>
+<div class="flex flex-col divide-y divide-border-light dark:divide-border-dark">
+<div class="p-4 flex flex-col gap-3">
+<div class="flex items-start justify-between">
+<div>
+<p class="font-semibold text-text-light dark:text-text-dark">Garcia Residence</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">101 Coral Way</p>
+</div>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">2h ago</p>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 text-sm font-semibold py-2 px-3 rounded-md bg-primary/20 text-primary hover:bg-primary/30 transition-colors">Approve</button>
+<button class="flex-1 text-sm font-semibold py-2 px-3 rounded-md bg-border-light dark:bg-border-dark text-text-light dark:text-text-dark hover:bg-border-light/80 dark:hover:bg-border-dark/80 transition-colors">Details</button>
+</div>
+</div>
+<div class="p-4 flex flex-col gap-3">
+<div class="flex items-start justify-between">
+<div>
+<p class="font-semibold text-text-light dark:text-text-dark">Miller Property</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">234 Sunbeam Ave</p>
+</div>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">1d ago</p>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 text-sm font-semibold py-2 px-3 rounded-md bg-primary/20 text-primary hover:bg-primary/30 transition-colors">Approve</button>
+<button class="flex-1 text-sm font-semibold py-2 px-3 rounded-md bg-border-light dark:bg-border-dark text-text-light dark:text-text-dark hover:bg-border-light/80 dark:hover:bg-border-dark/80 transition-colors">Details</button>
+</div>
+</div>
+<div class="p-4 flex flex-col gap-3">
+<div class="flex items-start justify-between">
+<div>
+<p class="font-semibold text-text-light dark:text-text-dark">Chen Estate</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">567 Ocean Blvd</p>
+</div>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">3d ago</p>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 text-sm font-semibold py-2 px-3 rounded-md bg-primary/20 text-primary hover:bg-primary/30 transition-colors">Approve</button>
+<button class="flex-1 text-sm font-semibold py-2 px-3 rounded-md bg-border-light dark:bg-border-dark text-text-light dark:text-text-dark hover:bg-border-light/80 dark:hover:bg-border-dark/80 transition-colors">Details</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

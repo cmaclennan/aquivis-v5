@@ -1,25 +1,45 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { createServerClient } from '@/lib/supabaseServer';
 
-// Mock scheduled_tasks read with Server-Timing measurement
+// GET /api/tasks - List scheduled tasks with optional filters
 export async function GET(req: NextRequest) {
-  const start = performance.now();
-  const url = new URL(req.url);
-  const date = url.searchParams.get('date') ?? new Date().toISOString().slice(0, 10);
-  const propertyId = url.searchParams.get('propertyId');
+  try {
+    const searchParams = req.nextUrl.searchParams;
+    const date = searchParams.get('date');
+    const propertyId = searchParams.get('propertyId');
+    const status = searchParams.get('status');
+    
+    const supabase = await createServerClient(false, req);
+    
+    let query = supabase
+      .from('scheduled_tasks')
+      .select('*, properties(name), units(name)')
+      .order('date', { ascending: true })
+      .order('time_slot', { ascending: true });
+    
+    if (date) {
+      query = query.eq('date', date);
+    }
+    
+    if (propertyId) {
+      query = query.eq('property_id', propertyId);
+    }
+    
+    if (status) {
+      query = query.eq('status', status);
+    }
 
-  // Mock data (fast)
-  const items = [
-    { id: '1', time: '08:00', property: 'Sea Temple – Main Pool', status: 'Due', date },
-    { id: '2', time: '09:15', property: 'Sheraton – Villa 21', status: 'In Progress', date },
-  ].filter((i) => !propertyId || i.property.includes(propertyId));
+    const { data, error } = await query;
 
-  const ms = Math.max(1, Math.round(performance.now() - start));
-  return new Response(JSON.stringify({ items }), {
-    headers: {
-      'content-type': 'application/json',
-      'server-timing': `app;dur=${ms}`,
-    },
-  });
+    if (error) {
+      console.error('Error fetching tasks:', error);
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+
+    return NextResponse.json({ data });
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }
-
 

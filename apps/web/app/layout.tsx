@@ -1,33 +1,32 @@
-export const metadata = {
-  title: 'Aquivis',
-  description: 'Pool Service Management'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import Nav from '@/components/Nav';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import ToastProvider from '@/components/ToastProvider';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
+  title: "Aquivis - Pool Service Management",
+  description: "Streamline your pool service business with Aquivis",
 };
 
-import SessionBar from '../components/SessionBar';
-import Nav from '../components/Nav';
-import './globals.css';
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <body>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-        <header className="border-b border-neutral-300 bg-white">
-          <div className="max-w-6xl mx-auto flex items-center gap-4 p-3">
-            <a href="/" className="font-semibold">Aquivis</a>
-            {/* Nav links render only when authenticated */}
+      <body className={`${inter.className} antialiased bg-[var(--background)] text-[var(--foreground)]`}>
+        <ErrorBoundary>
+          <ToastProvider>
             <Nav />
-            <div className="ml-auto">
-            {/* Client component renders session state */}
-              <SessionBar />
-            </div>
-          </div>
-        </header>
-        <div className="max-w-6xl mx-auto p-6">{children}</div>
+            {children}
+          </ToastProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );
 }
-

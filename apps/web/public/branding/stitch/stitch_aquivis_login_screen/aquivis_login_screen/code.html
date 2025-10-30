@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aquivis - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00A79D",
+                        "secondary": "#4FC3F7",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#101d22",
+                        "text-light": "#334155",
+                        "text-dark": "#cbd5e1"
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="flex flex-1">
+<div class="flex w-full flex-col lg:flex-row">
+<!-- Left Column - Image -->
+<div class="relative hidden w-full lg:flex lg:w-2/5 items-center justify-center">
+<div class="absolute inset-0 bg-center bg-no-repeat bg-cover" data-alt="Abstract background image with clean, calming blue water ripples and geometric pool tile patterns." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFJGvlifSBTLWqGKDDKltM88mxvnsvYXa_4ixQ8DWIgx0m72xOrvI-nUR13Jn7xsFGYFH85ySI-SUhJVBwAwBMj8ObVwZlh3hvv5KWYjzEbq9I33f754t91XsCfzfYvzzLFZ_pg9hPAqVqldREnmwkov76Ch3c5h93Vuow-GPpdvHhxo03pie20i0Yet8xg45HSjwADTZYlldKUTD9QiBJJ5ND6_tyGOSGC9r0V73SqIpro6-Wx__kT91z9Ri0RgHM8rjcI6JSXYA");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-secondary/50 to-primary/30 mix-blend-multiply"></div>
+<div class="relative z-10 p-12 text-center text-white">
+<h2 class="text-4xl font-bold leading-tight mb-4">Your Pool Business, Simplified.</h2>
+<p class="text-lg font-light">Manage clients, scheduling, and invoicing all in one place. Dive into efficiency with Aquivis.</p>
+</div>
+</div>
+<!-- Right Column - Login Form -->
+<div class="flex w-full lg:w-3/5 flex-col items-center justify-center p-8 sm:p-12 lg:p-20">
+<div class="w-full max-w-md">
+<!-- Logo -->
+<div class="mb-8 text-center lg:text-left">
+<h1 class="text-3xl font-bold text-primary dark:text-primary">Aquivis</h1>
+</div>
+<!-- Headline -->
+<h2 class="text-text-light dark:text-text-dark tracking-light text-[32px] font-bold leading-tight text-center lg:text-left pb-6 pt-2">Welcome Back</h2>
+<!-- Email Field -->
+<div class="flex w-full flex-col gap-4 py-3">
+<label class="flex flex-col flex-1">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Email or Username</p>
+<div class="relative flex w-full flex-1 items-stretch rounded-lg">
+<div class="text-slate-400 dark:text-slate-500 absolute left-0 top-0 flex h-full items-center justify-center pl-[15px]">
+<span class="material-symbols-outlined" style="font-size: 20px;">person</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary dark:focus:border-primary h-14 placeholder:text-slate-400 dark:placeholder:text-slate-500 p-[15px] pl-12 text-base font-normal leading-normal" placeholder="Enter your email or username" value=""/>
+</div>
+</label>
+</div>
+<!-- Password Field -->
+<div class="flex w-full flex-col gap-4 py-3">
+<label class="flex flex-col flex-1">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Password</p>
+<div class="relative flex w-full flex-1 items-stretch rounded-lg">
+<div class="text-slate-400 dark:text-slate-500 absolute left-0 top-0 flex h-full items-center justify-center pl-[15px]">
+<span class="material-symbols-outlined" style="font-size: 20px;">lock</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary dark:focus:border-primary h-14 placeholder:text-slate-400 dark:placeholder:text-slate-500 p-[15px] pl-12 text-base font-normal leading-normal" placeholder="Enter your password" type="password" value=""/>
+</div>
+</label>
+</div>
+<!-- Forgot Password Link -->
+<div class="flex justify-end pt-2 pb-6">
+<p class="text-primary text-sm font-medium leading-normal cursor-pointer hover:underline">Forgot Password?</p>
+</div>
+<!-- Login Button -->
+<button class="flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-primary px-5 py-4 text-base font-semibold leading-6 text-white transition-all hover:bg-opacity-90 active:scale-95">Login</button>
+<!-- Divider -->
+<div class="flex items-center gap-4 py-8">
+<hr class="flex-grow border-slate-200 dark:border-slate-700"/>
+<p class="text-sm font-medium text-slate-400 dark:text-slate-500">OR</p>
+<hr class="flex-grow border-slate-200 dark:border-slate-700"/>
+</div>
+<!-- Social Logins -->
+<div class="flex flex-col gap-4">
+<button class="flex w-full items-center justify-center gap-3 whitespace-nowrap rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-5 py-3 text-base font-medium leading-6 text-text-light dark:text-text-dark transition-all hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-95">
+<img alt="Google logo" class="h-6 w-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvQTYyHYHSh6dT1eXGcmcYHBNAmj5B59mKWRP_uyV3BluTN7AVabRX8mp3KtgxB3s5YccGr5J-yWp5iVqAJ529Pjj0dc3nS9Z2t0nr9sJ_JdQWxmWbcH9dQcYDMzgRmInOeG0EPmCjGkJ198XCx1pAwD1YIDFFhPIV-wzUT5vfmW9UZyWL5SpT6ef3p3f6hLZVEGeSuCj9FIJQq6jZcfw6ggox05VtX9NcOwd5vy9mQLKYfoQHtFnKsVtXJJR4GxwxJ5z5qehz7x0"/>
+                                    Continue with Google
+                                </button>
+<button class="flex w-full items-center justify-center gap-3 whitespace-nowrap rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-5 py-3 text-base font-medium leading-6 text-text-light dark:text-text-dark transition-all hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-95">
+<img alt="Apple logo" class="h-6 w-6 dark:invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4zMrKz7cOi6ENPqBCXp9XyPphdjHnhaquvImrqsCkAE8aMmFzfTrF56pudyZT_qc0dxw7UOaI2RzeqvoSKaTZ6MsyBRq3SoviPFBm51LxgMklgP6bh2NCcmUUyb0d2fdZ47SLcEYo4qlUeOYhjQVIsaCMt5bJp4Z4oQMeCkURGgTMGA6fLq54UNvTr_QRpuq6tv3SWRkQwHNsNPkeOO0pwC22i9RGC_W_msXSb5rdw6hyU5YJdswwZeoJPLuDDxI8c1H-V13N7V8"/>
+                                    Continue with Apple
+                                </button>
+</div>
+<!-- Sign Up Link -->
+<div class="pt-8 text-center">
+<p class="text-text-light dark:text-text-dark text-sm font-normal">Don't have an account? <a class="font-bold text-primary hover:underline" href="#">Sign Up</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>
